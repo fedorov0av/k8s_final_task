@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: randomizer
+  namespace: final-task
+  labels:
+    app: randomizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: randomizer
+  template:
+    metadata:
+      labels:
+        app: randomizer
+    spec:
+      containers:
+        - name: randomizer
+          image: fedorov0av/k8s-flask-mongodb-randomizer:latest
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
