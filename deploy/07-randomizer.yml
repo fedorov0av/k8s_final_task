@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: randomizer
-  namespace: final-task
+  # namespace: final-task
   labels:
     app: randomizer
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: randomizer

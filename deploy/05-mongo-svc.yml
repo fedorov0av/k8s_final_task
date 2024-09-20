@@ -4,7 +4,7 @@ metadata:
   labels:
     app: mongo
   name: mongo
-  namespace: final-task
+  # namespace: final-task
 spec:
   ports:
     - port: 27017

@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: randomizer
+  # namespace: final-task
+  # annotations:
+  #   nginx.org/listen-ports: "80"
+  #   nginx.org/rewrite-target: /
+  #   # nginx.org/default-backend: default-backend
+spec:
+  ingressClassName: traefik
+  defaultBackend:
+    service:
+      name: randomizer-svc
+      port:
+        number: 80
+  # ingressClassName: nginx
+  # rules:
+  # - host: randomizer.com
+  #   http:
+  #     paths:
+  #     - pathType: Prefix
+  #       path: "/"
+  #       backend:
+  #         service:
+  #           name: randomizer-svc
+  #           port:
+  #             number: 80
+
+  # rules:
+  # - host: example.com
+  #   http:
+  #     paths:
+  #     - pathType: Prefix
+  #       path: "/"
+  #       backend:
+  #         service:
+  #           name: randomizer-svc
+  #           port:
+  #             number: 80
+  
+
+  # defaultBackend:
+  #   service:
+  #     name: randomizer-svc
+  #     port:
+  #       number: 80
+
+  # rules:
+  # - host: randomizer.site
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: randomizer-svc
+  #           port:
+  #             number: 80
+
+  # defaultBackend:
+  #   service:
+  #     name: randomizer-svc
+  #     port:
+  #       number: 30007

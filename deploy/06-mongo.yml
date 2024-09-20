@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
-  namespace: final-task
+  # namespace: final-task
   labels:
       app: mongo
 spec:
