@@ -129,11 +129,11 @@ spec:
   ports:
   - port: 80
     name: "web"
-    # targetPort: web
+    targetPort: web
     protocol: TCP
   - port: 443
     name: "websecure"
-    # targetPort: websecure
+    targetPort: websecure
     protocol: TCP
 ---
 # Source: traefik/templates/deployment.yaml
@@ -167,11 +167,13 @@ spec:
         app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: traefik
+
       automountServiceAccountToken: true
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       containers:
-      - image: docker.io/traefik:v3.1.3
+      # - image: docker.io/traefik:v3.1.3
+      - image: fedorov0av/my-traefik-ubuntu
         imagePullPolicy: IfNotPresent
         name: traefik
         resources:
@@ -214,28 +216,29 @@ spec:
           capabilities:
             drop:
             - ALL
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
         volumeMounts:
           - name: data
             mountPath: /data
           - name: tmp
             mountPath: /tmp
         args:
-          - "--global.checknewversion"
-          - "--global.sendanonymoususage"
+          - "--global.checknewversion=true"
+          - "--global.sendanonymoususage=true"
           - "--entryPoints.metrics.address=:9100/tcp"
           - "--entryPoints.traefik.address=:9000/tcp"
           - "--entryPoints.web.address=:8000/tcp"
+          # - "--entryPoints.http.address=:80/tcp"
           - "--entryPoints.websecure.address=:8443/tcp"
           - "--api.dashboard=true"
           - "--ping=true"
-          - "--metrics.prometheus=true"
+          - "--metrics.prometheus=false"
           - "--metrics.prometheus.entrypoint=metrics"
           - "--providers.kubernetescrd=false"
           - "--providers.kubernetescrd.allowEmptyServices=false"
           - "--providers.kubernetesingress"
           - "--providers.kubernetesingress.allowEmptyServices=true"
-          - "--entryPoints.websecure.http.tls=true"
+          - "--entryPoints.websecure.http.tls=false"
           - "--log.level=INFO"
         env:
           - name: POD_NAME
@@ -251,10 +254,14 @@ spec:
           emptyDir: {}
         - name: tmp
           emptyDir: {}
+    
       securityContext:
-        runAsGroup: 65532
-        runAsNonRoot: true
-        runAsUser: 65532
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+        # sysctls:
+        # - name: "net.ipv4.ip_unprivileged_port_start"
+        #   value: "0"
 ---
 # Source: traefik/templates/ingressclass.yaml
 apiVersion: networking.k8s.io/v1
