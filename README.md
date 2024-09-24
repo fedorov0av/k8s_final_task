@@ -10,6 +10,9 @@
 https://community.traefik.io/t/traefik-v2-unable-to-bind-port-80-in-k8s/6112/7
 4) Созданы yaml манифесты для **Kubernetes** - расположены в директории **deploy/**
 
+**Требования к кластеру Kubernetes:**  
+Kubernetes версии 1.31, доступ к Docker Hub.
+
 **Установка:**
 
     kubectl apply -f deploy/
